@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Filter:</strong>
+  <%= @appartment.filter %>
+</p>
+
+<p>
+  <strong>External:</strong>
+  <%= @appartment.external_id %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @appartment.url %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @appartment.cost %>
+</p>
+
+<p>
+  <strong>Common expenses:</strong>
+  <%= @appartment.common_expenses %>
+</p>
+
+<p>
+  <strong>Bedrooms:</strong>
+  <%= @appartment.bedrooms %>
+</p>
+
+<p>
+  <strong>Bathrooms:</strong>
+  <%= @appartment.bathrooms %>
+</p>
+
+<p>
+  <strong>Floor:</strong>
+  <%= @appartment.floor %>
+</p>
+
+<p>
+  <strong>Orientation:</strong>
+  <%= @appartment.orientation %>
+</p>
+
+<p>
+  <strong>Useful surface:</strong>
+  <%= @appartment.useful_surface %>
+</p>
+
+<p>
+  <strong>Total surface:</strong>
+  <%= @appartment.total_surface %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @appartment.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @appartment.longitude %>
+</p>
+
+<p>
+  <strong>Published:</strong>
+  <%= @appartment.published %>
+</p>
+
+<p>
+  <strong>Sold out:</strong>
+  <%= @appartment.sold_out %>
+</p>
+
+<p>
+  <strong>Sold date:</strong>
+  <%= @appartment.sold_date %>
+</p>
+
+<p>
+  <strong>Rejected:</strong>
+  <%= @appartment.rejected %>
+</p>
+
+<p>
+  <strong>Reject reason:</strong>
+  <%= @appartment.reject_reason %>
+</p>
+
+<%= link_to 'Edit', edit_appartment_path(@appartment) %> |
+<%= link_to 'Back', appartments_path %>

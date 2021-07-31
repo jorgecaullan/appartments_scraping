@@ -1,0 +1,45 @@
+stages:
+  - "Build"
+  - "OldDeploy"
+  - "Deploy"
+
+"Docker Image":
+  stage: "Build"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /(\[skip-build\])/
+  only:
+    - staging
+    - master
+    - production
+  variables:
+    IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: "/certs"
+  image: "docker:20-git"
+  services:
+    - "docker:20-dind"
+  before_script:
+    - "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
+  script:
+    - "docker build -t $IMAGE_TAG -f deploy/server/docker/Dockerfile.$CI_COMMIT_REF_NAME ."
+    - "docker push $IMAGE_TAG"
+  after_script:
+    - "docker logout $CI_REGISTRY"
+  tags:
+    - build
+
+"Deploy":
+  stage: "Deploy"
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /(\[skip-deploy\])/
+  only:
+    - staging
+    - master
+    - production
+  image: gitlab.nursoft.cl:4443/devops/kube-deploy:master
+  script:
+    - ci-service-deploy
+  tags:
+    - deploy

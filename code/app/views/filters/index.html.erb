@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Filters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Commune</th>
+      <th>Bedrooms range</th>
+      <th>Bathrooms range</th>
+      <th>Price range</th>
+      <th>Useful surface range</th>
+      <th>Parking</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @filters.each do |filter| %>
+      <tr style="text-align: center;">
+        <td style="max-width: 40rem; overflow-wrap: anywhere;"><%= filter.url %></td>
+        <td><%= filter.commune %></td>
+        <td><%= filter.bedrooms_range %></td>
+        <td><%= filter.bathrooms_range %></td>
+        <td><%= filter.price_range %></td>
+        <td><%= filter.useful_surface_range %></td>
+        <td><%= filter.parking %></td>
+        <td><%= link_to 'Show', filter %></td>
+        <td><%= link_to 'Edit', edit_filter_path(filter) %></td>
+        <td><%= link_to 'Destroy', filter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Filter', new_filter_path %>

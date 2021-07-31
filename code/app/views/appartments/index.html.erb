@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Appartments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Filter</th>
+      <th>External</th>
+      <th>Url</th>
+      <th>Cost</th>
+      <th>Common expenses</th>
+      <th>Bedrooms</th>
+      <th>Bathrooms</th>
+      <th>Floor</th>
+      <th>Orientation</th>
+      <th>Useful surface</th>
+      <th>Total surface</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Published</th>
+      <th>Sold out</th>
+      <th>Sold date</th>
+      <th>Rejected</th>
+      <th>Reject reason</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appartments.each do |appartment| %>
+      <tr>
+        <td><%= appartment.filter.commune %></td>
+        <td><%= appartment.external_id %></td>
+        <td style="
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 20rem;
+          overflow: hidden;
+        ">
+          <a href="<%= appartment.url %>" target="_blank"><%= appartment.url %></a>
+        </td>
+        <td><%= appartment.cost %></td>
+        <td><%= appartment.common_expenses %></td>
+        <td><%= appartment.bedrooms %></td>
+        <td><%= appartment.bathrooms %></td>
+        <td><%= appartment.floor %></td>
+        <td><%= appartment.orientation %></td>
+        <td><%= appartment.useful_surface %></td>
+        <td><%= appartment.total_surface %></td>
+        <td><%= appartment.latitude %></td>
+        <td><%= appartment.longitude %></td>
+        <td><%= appartment.published %></td>
+        <td><%= appartment.sold_out %></td>
+        <td><%= appartment.sold_date %></td>
+        <td><%= appartment.rejected %></td>
+        <td><%= appartment.reject_reason %></td>
+        <td><%= link_to 'Show', appartment %></td>
+        <td><%= link_to 'Edit', edit_appartment_path(appartment) %></td>
+        <td><%= link_to 'Destroy', appartment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Appartment', new_appartment_path %>

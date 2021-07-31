@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @filter.url %>
+</p>
+
+<p>
+  <strong>Commune:</strong>
+  <%= @filter.commune %>
+</p>
+
+<p>
+  <strong>Bedrooms range:</strong>
+  <%= @filter.bedrooms_range %>
+</p>
+
+<p>
+  <strong>Bathrooms range:</strong>
+  <%= @filter.bathrooms_range %>
+</p>
+
+<p>
+  <strong>Price range:</strong>
+  <%= @filter.price_range %>
+</p>
+
+<p>
+  <strong>Useful surface range:</strong>
+  <%= @filter.useful_surface_range %>
+</p>
+
+<p>
+  <strong>Parking:</strong>
+  <%= @filter.parking %>
+</p>
+
+<%= link_to 'Edit', edit_filter_path(@filter) %> |
+<%= link_to 'Back', filters_path %>

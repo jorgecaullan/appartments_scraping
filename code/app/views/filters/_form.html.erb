@@ -1,0 +1,52 @@
+<%= form_with(model: filter, local: true) do |form| %>
+  <% if filter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(filter.errors.count, "error") %> prohibited this filter from being saved:</h2>
+
+      <ul>
+      <% filter.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :commune %>
+    <%= form.text_field :commune %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bedrooms_range %>
+    <%= form.text_field :bedrooms_range %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bathrooms_range %>
+    <%= form.text_field :bathrooms_range %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price_range %>
+    <%= form.text_field :price_range %>
+  </div>
+
+  <div class="field">
+    <%= form.label :useful_surface_range %>
+    <%= form.text_field :useful_surface_range %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parking %>
+    <%= form.check_box :parking %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

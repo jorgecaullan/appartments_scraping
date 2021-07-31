@@ -1,0 +1,67 @@
+<%= form_with(model: visit_comment, local: true) do |form| %>
+  <% if visit_comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(visit_comment.errors.count, "error") %> prohibited this visit_comment from being saved:</h2>
+
+      <ul>
+      <% visit_comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :appartment_id %>
+    <%= form.text_field :appartment_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :visit_date_time %>
+    <%= form.datetime_select :visit_date_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contact %>
+    <%= form.text_field :contact %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :extra_comments %>
+    <%= form.text_field :extra_comments %>
+  </div>
+
+  <div class="field">
+    <%= form.label :elevator_status %>
+    <%= form.number_field :elevator_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :balcony %>
+    <%= form.number_field :balcony %>
+  </div>
+
+  <div class="field">
+    <%= form.label :view %>
+    <%= form.number_field :view %>
+  </div>
+
+  <div class="field">
+    <%= form.label :water_key_status %>
+    <%= form.number_field :water_key_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :water_pressure %>
+    <%= form.number_field :water_pressure %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
