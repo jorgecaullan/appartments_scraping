@@ -46,6 +46,8 @@ code/tmp/*
 # Ignore env file
 .env
 
+cron.log
+
 # Docker volume bak folder
 bak
 code/bak
