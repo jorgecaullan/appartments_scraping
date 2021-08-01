@@ -17,6 +17,7 @@
       <th>Orientation</th>
       <th>Useful surface</th>
       <th>Total surface</th>
+      <th>Duplex</th>
       <th>Published</th>
       <th>Sold out</th>
       <th>Sold date</th>
@@ -29,7 +30,7 @@
   <tbody>
     <% @appartments.each do |appartment| %>
       <tr <% if appartment.sold_out or appartment.rejected %> style="color: red;" <% end %>>
-        <td><%= appartment.filter.commune %></td>
+        <td><%= appartment.commune %></td>
         <td><%= appartment.external_id %></td>
         <td style="
           text-overflow: ellipsis;
@@ -47,6 +48,7 @@
         <td><%= appartment.orientation %></td>
         <td><%= appartment.useful_surface %></td>
         <td><%= appartment.total_surface %></td>
+        <td><%= appartment.duplex %></td>
         <td><%= appartment.published %></td>
         <td><%= appartment.sold_out %></td>
         <td><%= appartment.sold_date %></td>

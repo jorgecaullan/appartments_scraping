@@ -56,12 +56,12 @@ task get_appartments: :environment do
         appartment_data[:common_expenses] = common_expenses
 
         # bedrooms
-        bedrooms_regexp = /Dormitorios[^\d]*(\d*)/
+        bedrooms_regexp = />Dormitorios[^\d]*(\d*)/
         bedrooms = body.scan(bedrooms_regexp)[0][0]
         appartment_data[:bedrooms] = bedrooms
 
         # # bathrooms
-        bathrooms_regexp = /Baños[^\d]*(\d*)/
+        bathrooms_regexp = />Ba.os[^\d]*(\d*)/
         bathrooms = body.scan(bathrooms_regexp)[0][0]
         appartment_data[:bathrooms] = bathrooms
 
@@ -72,7 +72,7 @@ task get_appartments: :environment do
         appartment_data[:floor] = floor
 
         # orientation
-        orientation_regexp1 = /Orientaci.n[^NOPS]*([NOPS]+)/
+        orientation_regexp1 = />Orientaci.n[^NOPS]*([NOPS]+)/
         orientation = body.scan(orientation_regexp1)[0]
         if orientation.nil?
           orientation_regexp2 = /[Oo]rientaci.n\s([nNpPoOsSrietu-]*)/
@@ -82,14 +82,20 @@ task get_appartments: :environment do
         appartment_data[:orientation] = orientation
 
         # useful_surface
-        useful_surface_regexp = /id":"Superficie .til","text":"(\d*) /
+        useful_surface_regexp = /id":"Superficie .til","text":"(\d*)[\.\s]/
         useful_surface = body.scan(useful_surface_regexp)[0][0]
         appartment_data[:useful_surface] = useful_surface
 
         # total_surface
-        total_surface_regexp = /id":"Superficie total","text":"(\d*) /
+        total_surface_regexp = /id":"Superficie total","text":"(\d*)[\.\s]/
         total_surface = body.scan(total_surface_regexp)[0][0]
         appartment_data[:total_surface] = total_surface
+
+        # duplex
+        duplex_regexp = /([Dd][uú]plex)/
+        duplex = body.scan(duplex_regexp)[0]
+        duplex = true unless duplex.nil?
+        appartment_data[:duplex] = duplex
 
         # latitude & longitude
         location_regexp = /maptype=roadmap&scale=1&format=jpg&center=([-\d\.]*)%2C([-\d\.]*)&zoom=16/
@@ -109,8 +115,8 @@ task get_appartments: :environment do
       end
     end
   end
-  p "Appartments createds: {createds}"
-  p "Appartments skiped: {all_external_ids.length - createds}"
+  p "Appartments createds: #{createds}"
+  p "Appartments skiped: #{all_external_ids.length - createds}"
   p 'Analizing previous appartments'
   appartments = Appartment
     .where.not(external_id: all_external_ids)
@@ -135,13 +141,3 @@ task get_appartments: :environment do
     p 'Not sold appartments found'
   end
 end
-
-# to generate a txt file to analize regexp from an url, use:
-# resp = Faraday.get "https://www.portalinmobiliario.com/MLC-612229835-av-providencia-1072-condominio-avenida-providencia-1072-_JM#position=9&amp;search_layout=stack&amp;type=item&amp;tracking_id=e66a070c-d8cd-40bc-9676-a26cf9535079"
-# File.open('log/appartments_response.txt', 'w') {|file| file.write(resp.body.force_encoding("utf-8"))}
-
-# example data used
-# urls = [
-#   "https://www.portalinmobiliario.com/MLC-633970102-estupenda-ubicacion-metro-cercano-edificio-tranquilo-_JM#position=1&amp;search_layout=stack&amp;type=item&amp;tracking_id=5ddf8a21-ea09-41bb-8cd2-b0b7ab57f054",
-#   "https://www.portalinmobiliario.com/arriendo/departamento/providencia-metropolitana/6260698-europa-uda#position=5&search_layout=stack&type=item&tracking_id=f76281d9-8c9a-4ce3-8df5-6850d3f2e99b"
-# ]

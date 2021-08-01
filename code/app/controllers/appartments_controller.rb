@@ -17,7 +17,7 @@ class AppartmentsController < ApplicationController
 
   # GET /appartments or /appartments.json
   def index
-    @appartments = Appartment.all
+    @appartments = Appartment.all.joins(:filter).select('appartments.*, filters.commune')
   end
 
   # GET /appartments/1 or /appartments/1.json
