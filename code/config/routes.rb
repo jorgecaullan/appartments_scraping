@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :visit_comments
+  post '/visit_comments', to: 'visit_comments#create'
+  post '/visit_comments/:id', to: 'visit_comments#update'
+  get '/appartments/analysis', to: 'appartments#index_analysis'
   resources :appartments
   resources :filters
 

@@ -20,6 +20,40 @@ class AppartmentsController < ApplicationController
     @appartments = Appartment.all.joins(:filter).select('appartments.*, filters.commune')
   end
 
+  # GET /appartments or /appartments.json
+  def index_analysis
+    @appartments = Appartment
+      .joins(:filter)
+      .where(sold_out: nil)
+      .where(rejected: nil)
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+
+    order_by = request.params['order_by']
+    if order_by
+      if order_by == 'total_cost'
+        @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
+      else
+        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
+          'ASC'
+        else
+          'DESC'
+        end
+        @appartments = @appartments.order("#{order_by} #{order_dir}")
+      end
+    end
+      # .where.not(rejected: true)
+  end
+
   # GET /appartments/1 or /appartments/1.json
   def show
   end
@@ -74,6 +108,7 @@ class AppartmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_appartment
       @appartment = Appartment.find(params[:id])
+      @visit_comment = @appartment.visit_comment || VisitComment.new()
     end
 
     # Only allow a list of trusted parameters through.
