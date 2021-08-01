@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
-  # before_action :authenticate_request
+  before_action :test_cookie
 
-  # def authenticate_request
-  #   if request.authorization != ENV['MASTER_PASSWORD']
-  #     render json: { error: e.message }, status: 401
-  #   end
-  # end
+  private
+    def test_cookie
+      cookie = request.cookies['master-password']
+      redirect_to '/auth' if cookie != ENV['MASTER_PASSWORD']
+    end
 end

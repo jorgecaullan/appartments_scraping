@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
+<a href="/"> Home </a>
 
-<h1>Filters</h1>
+<h1>Filtros</h1>
 
 <table>
   <thead>
@@ -19,7 +20,14 @@
   <tbody>
     <% @filters.each do |filter| %>
       <tr style="text-align: center;">
-        <td style="max-width: 40rem; overflow-wrap: anywhere;"><%= filter.url %></td>
+        <td style="
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 40rem;
+          overflow: hidden;
+        ">
+          <a href="<%= filter.url %>" target="_blank"><%= filter.url %></a>
+        </td>
         <td><%= filter.commune %></td>
         <td><%= filter.bedrooms_range %></td>
         <td><%= filter.bathrooms_range %></td>

@@ -1,12 +1,13 @@
 desc "Get appartments from all filters urls"
 task get_appartments: :environment do
   filters = Filter.all
+  all_external_ids = []
+  createds = 0
   filters.each do |filter|
-    p 'Getting appartments urls'
+    p "Getting appartments urls on #{filter.commune}"
     urls = filter.get_appartments_urls
 
     urls.each do |url|
-      p "Analyzing #{url}"
       begin
         resp = Faraday.get(url)
         body = resp.body.force_encoding("utf-8")
@@ -17,10 +18,11 @@ task get_appartments: :environment do
 
         external_id_regex = /Publicación <span class="ui-pdp-color--BLACK ui-pdp-family--SEMIBOLD">#(\d*)<\/span>/
         external_id = body.scan(external_id_regex)[0][0]
+        all_external_ids.push(external_id)
         existant = Appartment.find_by(external_id: external_id)
         unless existant.nil?
-          p 'Skipped'
-          next # skip if already exist
+          p "Skipped #{external_id} (/appartments/#{existant.id})"
+          next
         end
         appartment_data[:external_id] = external_id
 
@@ -70,7 +72,7 @@ task get_appartments: :environment do
         appartment_data[:floor] = floor
 
         # orientation
-        orientation_regexp1 = /Orientaci.n[^\d]*([nNpPoOsS]*)/
+        orientation_regexp1 = /Orientaci.n[^NOPS]*([NOPS]+)/
         orientation = body.scan(orientation_regexp1)[0]
         if orientation.nil?
           orientation_regexp2 = /[Oo]rientaci.n\s([nNpPoOsSrietu-]*)/
@@ -98,15 +100,40 @@ task get_appartments: :environment do
         appartment_data[:longitude] = longitude
 
         appartment = Appartment.new(appartment_data)
-        appartment.save
-        p 'Created'
+        raise appartment.errors unless appartment.save
+        createds += 1
+        p "Created /appartments/#{appartment.id}"
       rescue => e
-        p "Error on create"
+        p "Error on create #{url}"
         p e
       end
     end
   end
-  p 'Appartments created'
+  p "Appartments createds: {createds}"
+  p "Appartments skiped: {all_external_ids.length - createds}"
+  p 'Analizing previous appartments'
+  appartments = Appartment
+    .where.not(external_id: all_external_ids)
+    .where(sold_out: nil)
+  appartments.each do |appartment|
+    resp = Faraday.get(appartment.url)
+    body = resp.body.force_encoding("utf-8")
+    finished_regexp1 = />Publicaci.n finalizada</
+    finished = body.scan(finished_regexp1)[0]
+    unless finished.nil?
+      appartment.sold_out = true
+      appartment.sold_date = Time.zone.now
+    else
+      appartment.rejected = true
+      appartment.reject_reason = 'La publicacion ya no coincide con los filtros'
+    end
+    appartment.save
+  end
+  if appartments.count > 0
+    p "Updated sold appartments (#{appartments.count})"
+  else
+    p 'Not sold appartments found'
+  end
 end
 
 # to generate a txt file to analize regexp from an url, use:

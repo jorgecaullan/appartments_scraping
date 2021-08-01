@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<a href="/"> Home </a>
 
 <h1>Appartments</h1>
 
@@ -16,8 +17,6 @@
       <th>Orientation</th>
       <th>Useful surface</th>
       <th>Total surface</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
       <th>Published</th>
       <th>Sold out</th>
       <th>Sold date</th>
@@ -29,7 +28,7 @@
 
   <tbody>
     <% @appartments.each do |appartment| %>
-      <tr>
+      <tr <% if appartment.sold_out or appartment.rejected %> style="color: red;" <% end %>>
         <td><%= appartment.filter.commune %></td>
         <td><%= appartment.external_id %></td>
         <td style="
@@ -48,8 +47,6 @@
         <td><%= appartment.orientation %></td>
         <td><%= appartment.useful_surface %></td>
         <td><%= appartment.total_surface %></td>
-        <td><%= appartment.latitude %></td>
-        <td><%= appartment.longitude %></td>
         <td><%= appartment.published %></td>
         <td><%= appartment.sold_out %></td>
         <td><%= appartment.sold_date %></td>
@@ -57,7 +54,6 @@
         <td><%= appartment.reject_reason %></td>
         <td><%= link_to 'Show', appartment %></td>
         <td><%= link_to 'Edit', edit_appartment_path(appartment) %></td>
-        <td><%= link_to 'Destroy', appartment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,5 +1,19 @@
 class AppartmentsController < ApplicationController
   before_action :set_appartment, only: %i[ show edit update destroy ]
+  skip_before_action :test_cookie, only: [:auth]
+
+  def auth
+    @password = request.params['master-password']
+    if @password
+      cookies['master-password'] = @password
+      redirect_to '/' if @password == ENV['MASTER_PASSWORD']
+    end
+
+    redirect_to '/' if request.cookies['master-password'] == ENV['MASTER_PASSWORD']
+  end
+
+  def home
+  end
 
   # GET /appartments or /appartments.json
   def index

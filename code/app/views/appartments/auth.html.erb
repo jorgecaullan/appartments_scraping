@@ -1,0 +1,9 @@
+<p> Ingresar clave de autorizacion </p>
+<form>
+  <input name="master-password" value="<%= @password %>"/>
+  <button> Submit </button>
+</form>
+
+<% if @password %>
+  <p style="color: red;"> La clave "<%= @password %>" es incorrecta </p>
+<% end %>
