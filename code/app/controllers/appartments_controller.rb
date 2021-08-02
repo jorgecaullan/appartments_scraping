@@ -24,6 +24,7 @@ class AppartmentsController < ApplicationController
   def index_analysis
     @appartments = Appartment
       .joins(:filter)
+      .includes(:visit_comment)
       .where(sold_out: nil)
       .where(rejected: nil)
       .select('appartments.*, filters.commune')

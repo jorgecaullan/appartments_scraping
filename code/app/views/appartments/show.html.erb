@@ -1,240 +1,321 @@
 <p id="notice"><%= notice %></p>
 
-<h2> Departamento </h2>
+<h1> Departamento </h1>
 
-<p>
-  <strong>Filter:</strong>
-  <%= @appartment.filter %>
-</p>
+<form
+  action="/appartments/<%= @appartment.id %>"
+  accept-charset="UTF-8"
+  method="post"
+>
+  <input
+    name="appartment[appartment_id]"
+    type="hidden"
+    value="<%= @appartment.id %>"
+  />
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>"
+  />
 
-<p>
-  <strong>External:</strong>
-  <%= @appartment.external_id %>
-</p>
+  <p>
+    <label>
+      <strong>Id externa:</strong>
+      <%= @appartment.external_id %>
+    </label>
+  </p>
 
-<p>
-  <strong>Url:</strong>
-  <%= @appartment.url %>
-</p>
+  <p>
+    <label>
+      <strong>Url:</strong>
+      <a href="<%= @appartment.url %>" target="_blank"><%= @appartment.url %></a>
+    </label>
+  </p>
 
-<p>
-  <strong>Cost:</strong>
-  <%= @appartment.cost %>
-</p>
+  <p>
+    <label>
+      <strong>Comuna:</strong>
+      <%= @appartment.filter.commune %>
+    </label>
+  </p>
 
-<p>
-  <strong>Common expenses:</strong>
-  <%= @appartment.common_expenses %>
-</p>
+  <p>
+    <label>
+      <strong>Precio:</strong>
+      <input
+        type="number"
+        name="appartment[cost]"
+        value="<%= @appartment.cost %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Bedrooms:</strong>
-  <%= @appartment.bedrooms %>
-</p>
+  <p>
+    <label>
+      <strong>Gastos comunes:</strong>
+      <input
+        type="number"
+        name="appartment[common_expenses]"
+        value="<%= @appartment.common_expenses %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Bathrooms:</strong>
-  <%= @appartment.bathrooms %>
-</p>
+  <p>
+    <label>
+      <strong>Dormitorios:</strong>
+      <input
+        type="number"
+        name="appartment[bedrooms]"
+        value="<%= @appartment.bedrooms %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Floor:</strong>
-  <%= @appartment.floor %>
-</p>
+  <p>
+    <label>
+      <strong>Baños:</strong>
+      <input
+        type="number"
+        name="appartment[bathrooms]"
+        value="<%= @appartment.bathrooms %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Orientation:</strong>
-  <%= @appartment.orientation %>
-</p>
+  <p>
+    <label>
+      <strong>Piso:</strong>
+      <input
+        type="number"
+        name="appartment[floor]"
+        value="<%= @appartment.floor %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Useful surface:</strong>
-  <%= @appartment.useful_surface %>
-</p>
+  <p>
+    <label>
+      <strong>Orientacion:</strong>
+      <input
+        name="appartment[orientation]"
+        value="<%= @appartment.orientation %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Total surface:</strong>
-  <%= @appartment.total_surface %>
-</p>
+  <p>
+    <label>
+      <strong>Superficie útil:</strong>
+      <input
+        type="number"
+        name="appartment[useful_surface]"
+        value="<%= @appartment.useful_surface %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @appartment.latitude %>
-</p>
+  <p>
+    <label>
+      <strong>Superficie total:</strong>
+      <input
+        type="number"
+        name="appartment[total_surface]"
+        value="<%= @appartment.total_surface %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @appartment.longitude %>
-</p>
+  <p>
+    <label>
+      <strong>Fecha de publicacion:</strong>
+      <input
+        type="date"
+        name="appartment[published]"
+        value="<%= @appartment.published.strftime("%Y-%m-%d") %>"
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Published:</strong>
-  <%= @appartment.published %>
-</p>
+  <p>
+    <label>
+      <strong>Rechazado:</strong>
+      <input
+        type="checkbox"
+        name="appartment[rejected]"
+        value="true"
+        <% if @appartment.rejected %>checked<% end %>
+      />
+    </label>
+  </p>
 
-<p>
-  <strong>Sold out:</strong>
-  <%= @appartment.sold_out %>
-</p>
+  <p>
+    <label style="display: flex;">
+      <strong style="margin-right: 0.25rem;">Razon de rechazo:</strong>
+      <textarea
+        name="appartment[reject_reason]"
+      ><%= @appartment.reject_reason %></textarea>
+    </label>
+  </p>
 
-<p>
-  <strong>Sold date:</strong>
-  <%= @appartment.sold_date %>
-</p>
+  <button>Editar departamento</button>
+</form>
 
-<p>
-  <strong>Rejected:</strong>
-  <%= @appartment.rejected %>
-</p>
-
-<p>
-  <strong>Reject reason:</strong>
-  <%= @appartment.reject_reason %>
-</p>
-
-<h2> Visita </h2>
+<h1>Visita</h1>
 
 <form
   action="/visit_comments<% if @visit_comment.id %>/<%= @visit_comment.id %><% end %>"
   accept-charset="UTF-8"
   method="post"
 >
-  <input name="visit_comment[appartment_id]" type="hidden" value="<%= @appartment.id %>">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input
+    name="visit_comment[appartment_id]"
+    type="hidden"
+    value="<%= @appartment.id %>"
+  />
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>"
+  />
   <p>
-    <strong>Fecha:</strong>
-    <input
-      name="visit_comment[visit_date_time]"
-      type="date"
-      <% if @visit_comment.visit_date_time %>value="<%= @visit_comment.visit_date_time.strftime("%Y-%m-%d") %>"<% end %>
-    >
+    <label>
+      <strong>Fecha:</strong>
+      <input
+        name="visit_comment[visit_date_time]"
+        type="date"
+        <% if @visit_comment.visit_date_time %>
+        value="<%= @visit_comment.visit_date_time.strftime("%Y-%m-%d") %>"
+        <% end%>
+      />
+    </label>
   </p>
 
   <p>
-    <strong>Contacto:</strong>
-    <input name="visit_comment[contact]" value="<%= @visit_comment.contact %>">
+    <label>
+      <strong>Contacto:</strong>
+      <input
+        name="visit_comment[contact]"
+        value="<%= @visit_comment.contact %>"
+      />
+    </label>
   </p>
 
   <p>
     <strong>Direccion:</strong>
-    <input name="visit_comment[address]" value="<%= @visit_comment.address %>">
+    <label>
+      <input
+        name="visit_comment[address]"
+        value="<%= @visit_comment.address %>"
+      />
+    </label>
   </p>
 
   <p>
     <strong>Comentarios:</strong>
-    <input name="visit_comment[extra_comments]" value="<%= @visit_comment.extra_comments %>">
+    <label>
+      <input
+        name="visit_comment[extra_comments]"
+        value="<%= @visit_comment.extra_comments %>"
+      />
+    </label>
   </p>
 
   <p>
-    <strong>Estado del elevador:</strong> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[elevator_status]"
-      value="bad"
-      <% if @visit_comment.elevator_status == 'bad' %> checked <% end %>
-    > Malo </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[elevator_status]"
-      value="normal"
-      <% if @visit_comment.elevator_status == 'normal' %> checked <% end %>
-    > Normal </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[elevator_status]"
-      value="good"
-      <% if @visit_comment.elevator_status == 'good' %> checked <% end %>
-    > Bueno </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[elevator_status]"
-      value="very_good"
-      <% if @visit_comment.elevator_status == 'very_good' %> checked <% end %>
-    > Muy Bueno </label>
+    <strong>Estado del elevador:</strong> <br />
+    <label
+      ><input type="radio" name="visit_comment[elevator_status]" value="bad" <%
+      if @visit_comment.elevator_status == 'bad' %> checked <% end %> > Malo
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[elevator_status]" value="normal"
+      <% if @visit_comment.elevator_status == 'normal' %> checked <% end %> >
+      Normal
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[elevator_status]" value="good" <%
+      if @visit_comment.elevator_status == 'good' %> checked <% end %> > Bueno
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[elevator_status]"
+      value="very_good" <% if @visit_comment.elevator_status == 'very_good' %>
+      checked <% end %> > Muy Bueno
+    </label>
   </p>
 
   <p>
-    <strong>Balcon:</strong> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[balcony]"
-      value="bad"
-      <% if @visit_comment.balcony == 'bad' %> checked <% end %>
-    > Malo </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[balcony]"
-      value="normal"
-      <% if @visit_comment.balcony == 'normal' %> checked <% end %>
-    > Normal </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[balcony]"
-      value="good"
-      <% if @visit_comment.balcony == 'good' %> checked <% end %>
-    > Bueno </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[balcony]"
-      value="very_good"
-      <% if @visit_comment.balcony == 'very_good' %> checked <% end %>
-    > Muy Bueno </label>
+    <strong>Balcon:</strong> <br />
+    <label
+      ><input type="radio" name="visit_comment[balcony]" value="bad" <% if
+      @visit_comment.balcony == 'bad' %> checked <% end %> > Malo
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[balcony]" value="normal" <% if
+      @visit_comment.balcony == 'normal' %> checked <% end %> > Normal
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[balcony]" value="good" <% if
+      @visit_comment.balcony == 'good' %> checked <% end %> > Bueno
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[balcony]" value="very_good" <% if
+      @visit_comment.balcony == 'very_good' %> checked <% end %> > Muy Bueno
+    </label>
   </p>
 
   <p>
-    <strong>Vista:</strong> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[view]"
-      value="bad"
-      <% if @visit_comment.view == 'bad' %> checked <% end %>
-    > Mala </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[view]"
-      value="normal"
-      <% if @visit_comment.view == 'normal' %> checked <% end %>
-    > Normal </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[view]"
-      value="good"
-      <% if @visit_comment.view == 'good' %> checked <% end %>
-    > Buena </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[view]"
-      value="very_good"
-      <% if @visit_comment.view == 'very_good' %> checked <% end %>
-    > Muy Buena </label>
+    <strong>Vista:</strong> <br />
+    <label
+      ><input type="radio" name="visit_comment[view]" value="bad" <% if
+      @visit_comment.view == 'bad' %> checked <% end %> > Mala
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[view]" value="normal" <% if
+      @visit_comment.view == 'normal' %> checked <% end %> > Normal
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[view]" value="good" <% if
+      @visit_comment.view == 'good' %> checked <% end %> > Buena
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[view]" value="very_good" <% if
+      @visit_comment.view == 'very_good' %> checked <% end %> > Muy Buena
+    </label>
   </p>
 
   <p>
-    <strong>Estado llaves de agua:</strong> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[water_key_status]"
-      value="bad"
-      <% if @visit_comment.water_key_status == 'bad' %> checked <% end %>
-    > Malas </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[water_key_status]"
-      value="normal"
-      <% if @visit_comment.water_key_status == 'normal' %> checked <% end %>
-    > Normal </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[water_key_status]"
-      value="good"
-      <% if @visit_comment.water_key_status == 'good' %> checked <% end %>
-    > Buenas </label> <br>
-    <label><input
-      type="radio"
-      name="visit_comment[water_key_status]"
-      value="very_good"
-      <% if @visit_comment.water_key_status == 'very_good' %> checked <% end %>
-    > Muy Buenas </label>
+    <strong>Estado llaves de agua:</strong> <br />
+    <label
+      ><input type="radio" name="visit_comment[water_key_status]" value="bad" <%
+      if @visit_comment.water_key_status == 'bad' %> checked <% end %> > Malas
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[water_key_status]" value="normal"
+      <% if @visit_comment.water_key_status == 'normal' %> checked <% end %> >
+      Normal
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[water_key_status]" value="good"
+      <% if @visit_comment.water_key_status == 'good' %> checked <% end %> >
+      Buenas
+    </label>
+    <br />
+    <label
+      ><input type="radio" name="visit_comment[water_key_status]"
+      value="very_good" <% if @visit_comment.water_key_status == 'very_good' %>
+      checked <% end %> > Muy Buenas
+    </label>
   </p>
 
   <p>
@@ -268,5 +349,4 @@
   <button> Guardar Comentarios </button>
 </form>
 
-<%= link_to 'Edit', edit_appartment_path(@appartment) %> |
 <%= link_to 'Back', '/appartments/analysis' %>

@@ -19,6 +19,7 @@
       <th onclick="window.location.href = '/appartments/analysis?order_by=total_surface';">Superficie total</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=duplex';">Duplex</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th>
+      <th>Contacto</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -76,6 +77,11 @@
         <td><%= appartment.total_surface %></td>
         <td <% if appartment.duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= appartment.duplex %></td>
         <td><%= appartment.published %></td>
+        <% unless appartment.visit_comment.nil? %>
+        <td><%= appartment.visit_comment.contact %></td>
+        <% else %>
+        <td></td>
+        <% end %>
         <td><a href="/appartments/<%= appartment.id %>">Ver</a></td>
       </tr>
     <% end %>

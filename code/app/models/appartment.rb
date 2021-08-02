@@ -13,9 +13,12 @@ class Appartment < ApplicationRecord
     worst_color_green = 199
     worst_color_blue = 195
 
-    red = (((current_value - best_value)*(worst_color_red - best_color_red))/(worst_value - best_value)) + best_color_red
-    green = (((current_value - best_value)*(worst_color_green - best_color_green))/(worst_value - best_value)) + best_color_green
-    blue = (((current_value - best_value)*(worst_color_blue - best_color_blue))/(worst_value - best_value)) + best_color_blue
+    values_diference = worst_value - best_value
+    values_diference = 1 if values_diference == 0
+
+    red = ((current_value - best_value)*(worst_color_red - best_color_red))/values_diference + best_color_red
+    green = ((current_value - best_value)*(worst_color_green - best_color_green))/values_diference + best_color_green
+    blue = ((current_value - best_value)*(worst_color_blue - best_color_blue))/values_diference + best_color_blue
 
     return "rgb(#{red}, #{green}, #{blue})"
   end
