@@ -17,7 +17,10 @@ class AppartmentsController < ApplicationController
 
   # GET /appartments or /appartments.json
   def index
-    @appartments = Appartment.all.joins(:filter).select('appartments.*, filters.commune')
+    @appartments = Appartment
+      .joins(:filter)
+      .where('sold_out = true OR rejected = true')
+      .select('appartments.*, filters.commune')
   end
 
   def index_analysis
