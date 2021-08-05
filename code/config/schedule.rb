@@ -24,7 +24,7 @@ set :environment, :development
 set :output, '/opt/appartment_search/cron.log'
 ENV.each { |k, v| env(k, v) }
 
-every 12.hours do
+every 6.hours do
   rake "get_appartments"
 end
 

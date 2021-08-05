@@ -1,5 +1,5 @@
 class Filter < ApplicationRecord
-  has_many :appartments
+  has_many :appartments, dependent: :destroy
 
   def get_appartments_urls
     resp = Faraday.get(self.url)

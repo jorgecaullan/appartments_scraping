@@ -140,6 +140,30 @@
 
   <p>
     <label>
+      <strong>Walk in closet:</strong>
+      <input
+        type="checkbox"
+        name="appartment[walk_in_closet]"
+        value="true"
+        <% if @appartment.walk_in_closet %>checked<% end %>
+      />
+    </label>
+  </p>
+
+  <p>
+    <label>
+      <strong>Duplex:</strong>
+      <input
+        type="checkbox"
+        name="appartment[duplex]"
+        value="true"
+        <% if @appartment.duplex %>checked<% end %>
+      />
+    </label>
+  </p>
+
+  <p>
+    <label>
       <strong>Rechazado:</strong>
       <input
         type="checkbox"

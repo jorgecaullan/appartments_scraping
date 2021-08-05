@@ -1,6 +1,6 @@
 class Appartment < ApplicationRecord
   belongs_to :filter
-  has_one :visit_comment
+  has_one :visit_comment, dependent: :destroy
 
   before_save :set_nils
 
@@ -66,7 +66,7 @@ class Appartment < ApplicationRecord
     common_expenses_regexp1 = /id":"Gastos comunes","text":"(\d*) /
     common_expenses = body.scan(common_expenses_regexp1)[0]
     if common_expenses.nil?
-      common_expenses_regexp2 = /[Gg](?:astos\s)?[Cc](?:omunes)?[\sdeaproximsn\$]*([\d\.]*)/
+      common_expenses_regexp2 = /[Gg](?:astos?\s|ASTOS?\s)?[Cc](?:om[uú]ne?s?|OM[UÚNE?S?])?[\sdeaproximsn:\$\.]*([\d\.]*)/
       common_expenses = body.scan(common_expenses_regexp2)[0]
     end
     common_expenses = common_expenses[0].gsub('.', '') unless common_expenses.nil?
@@ -96,11 +96,28 @@ class Appartment < ApplicationRecord
     orientation_regexp1 = />Orientaci.n[^NOPS]*([NOPS]+)/
     orientation = body.scan(orientation_regexp1)[0]
     if orientation.nil?
-      orientation_regexp2 = /(?:[Oo]rientaci.n|[Vv]ista)\s([nNpPoOsSrietu-]*)/
+      orientation_regexp2 = /([Nn]or[-\s]*[Oo]riente|[Nn]or[-\s]*[Pp]oniente|[Ss]ur[-\s]*[Oo]riente|[Ss]ur[-\s]*[Pp]oniente|[Nn]orte|[Oo]riente|[Pp]oniente)/
       orientation = body.scan(orientation_regexp2)[0]
     end
     orientation = orientation[0] unless orientation.nil?
-    appartment_data[:orientation] = orientation
+    case orientation
+    when nil
+      appartment_data[:orientation] = nil
+    when /[Nn]or[-\s]*[Oo]riente/
+      appartment_data[:orientation] = 'NO'
+    when /[Nn]or[-\s]*[Pp]oniente/
+      appartment_data[:orientation] = 'NP'
+    when /[Ss]ur[-\s]*[Oo]riente/
+      appartment_data[:orientation] = 'SO'
+    when /[Ss]ur[-\s]*[Pp]oniente/
+      appartment_data[:orientation] = 'SP'
+    when /[Nn]orte/
+      appartment_data[:orientation] = 'N'
+    when /[Oo]riente/
+      appartment_data[:orientation] = 'O'
+    when /[Pp]oniente/
+      appartment_data[:orientation] = 'P'
+    end
 
     # useful_surface
     useful_surface_regexp = /id":"Superficie .til","text":"(\d*)[\.\s]/

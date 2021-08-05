@@ -1,6 +1,6 @@
 desc "Test filters of an appartment url"
 task test_appartment_url: :environment do
-  url = "https://www.portalinmobiliario.com/arriendo/departamento/providencia-metropolitana/6284642-llewellyn-jones-1252-uda#position=12&amp;search_layout=stack&amp;type=item&amp;tracking_id=9bbdb459-0da4-44c4-8437-6cb9f43713e6"
+  url = "https://www.portalinmobiliario.com/arriendo/departamento/las-condes-metropolitana/6230618-avenida-presidente-kennedy-uda#position=5&amp;search_layout=stack&amp;type=item&amp;tracking_id=1de782e8-dd60-4bc8-8452-461fdae877b3"
 
   begin
     appartment_data = Appartment.get_appartment_from_url(url, false, true)
