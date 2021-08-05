@@ -9,6 +9,7 @@
 <table class="table">
   <thead>
     <tr style="cursor: pointer;">
+      <th>#</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=commune';">Comuna</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=url';">Url</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=cost';">Precio</th>
@@ -29,65 +30,66 @@
   </thead>
 
   <tbody style="text-align: center;">
-    <% @appartments.each do |appartment| %>
+    <% for i in 0..@appartments.length-1 do %>
       <tr onmouseover="this.style.backgroundColor='antiquewhite';" onmouseout="this.style.backgroundColor='white';">
-        <td><%= appartment.commune %></td>
+        <td> <%= i + 1 %> </td>
+        <td><%= @appartments[i].commune %></td>
         <td style="
           text-overflow: ellipsis;
           white-space: nowrap;
           max-width: 15rem;
           overflow: hidden;
         ">
-          <a href="<%= appartment.url %>" target="_blank"><%= appartment.url %></a>
+          <a href="<%= @appartments[i].url %>" target="_blank"><%= @appartments[i].url %></a>
         </td>
-        <td><%= appartment.cost %></td>
-        <td><%= appartment.common_expenses %></td>
+        <td><%= @appartments[i].cost %></td>
+        <td><%= @appartments[i].common_expenses %></td>
         <td
           style="background-color:
             <%=Appartment.set_color(
               @best_total_cost,
               @worst_total_cost,
-              appartment.cost + (appartment.common_expenses || 0)
+              @appartments[i].cost + (@appartments[i].common_expenses || 0)
             ) %>"
         >
-          <%= appartment.cost + (appartment.common_expenses || 0) %>
+          <%= @appartments[i].cost + (@appartments[i].common_expenses || 0) %>
         </td>
         <td
           style="background-color:
             <%=Appartment.set_color(
               @worst_bedrooms,
               @best_bedrooms,
-              appartment.bedrooms
+              @appartments[i].bedrooms
             ) %>"
-        ><%= appartment.bedrooms %></td>
+        ><%= @appartments[i].bedrooms %></td>
         <td
           style="background-color:
             <%=Appartment.set_color(
               @worst_bathrooms,
               @best_bathrooms,
-              appartment.bathrooms
+              @appartments[i].bathrooms
             ) %>"
-        ><%= appartment.bathrooms %></td>
-        <td><%= appartment.floor %></td>
-        <td><%= appartment.orientation %></td>
+        ><%= @appartments[i].bathrooms %></td>
+        <td><%= @appartments[i].floor %></td>
+        <td><%= @appartments[i].orientation %></td>
         <td
           style="background-color:
             <%=Appartment.set_color(
               @worst_useful_surface,
               @best_useful_surface,
-              appartment.useful_surface
+              @appartments[i].useful_surface
             ) %>"
-        ><%= appartment.useful_surface %></td>
-        <td><%= appartment.total_surface %></td>
-        <td <% if appartment.duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= appartment.duplex %></td>
-        <td <% if appartment.walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= appartment.walk_in_closet %></td>
-        <td><%= appartment.published %></td>
-        <% unless appartment.visit_comment.nil? %>
-        <td><%= appartment.visit_comment.contact %></td>
+        ><%= @appartments[i].useful_surface %></td>
+        <td><%= @appartments[i].total_surface %></td>
+        <td <% if @appartments[i].duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].duplex %></td>
+        <td <% if @appartments[i].walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].walk_in_closet %></td>
+        <td><%= @appartments[i].published %></td>
+        <% unless @appartments[i].visit_comment.nil? %>
+        <td><%= @appartments[i].visit_comment.contact %></td>
         <% else %>
         <td></td>
         <% end %>
-        <td><a href="/appartments/<%= appartment.id %>">Ver</a></td>
+        <td><a href="/appartments/<%= @appartments[i].id %>">Ver</a></td>
       </tr>
     <% end %>
   </tbody>
@@ -95,4 +97,4 @@
 
 <br>
 
-<%= link_to 'New Appartment', new_appartment_path %>
+<%= link_to 'New @Appartments[i]', new_appartment_path %>
