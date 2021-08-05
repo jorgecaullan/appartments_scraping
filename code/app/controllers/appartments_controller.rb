@@ -107,7 +107,7 @@ class AppartmentsController < ApplicationController
   def update
     respond_to do |format|
       if @appartment.update(appartment_params)
-        format.html { redirect_to @appartment, notice: "Appartment was successfully updated." }
+        format.html { redirect_back(fallback_location: '/') }
         format.json { render :show, status: :ok, location: @appartment }
       else
         format.html { render :edit, status: :unprocessable_entity }

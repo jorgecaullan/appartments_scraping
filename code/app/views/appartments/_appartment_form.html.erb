@@ -1,0 +1,156 @@
+<input
+  name="appartment[appartment_id]"
+  type="hidden"
+  value="<%= appartment.id %>"
+/>
+<input
+  type="hidden"
+  name="authenticity_token"
+  value="<%= form_authenticity_token %>"
+/>
+
+<strong>
+  Publicado el
+  <%= appartment.published.strftime("%d-%m-%Y") %>
+</strong>
+
+<div style="overflow-wrap: break-word;">
+  <a
+    href="<%= appartment.url %>"
+    target="_blank"
+  >
+    <%= appartment.url %>
+  </a>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label> Precio </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[cost]"
+      value="<%= appartment.cost %>"
+    />
+  </div>
+  <div class="form-group col-md-6">
+    <label> Gastos comunes </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[common_expenses]"
+      value="<%= appartment.common_expenses %>"
+    />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label> Dormitorios </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[bedrooms]"
+      value="<%= appartment.bedrooms %>"
+    />
+  </div>
+  <div class="form-group col-md-6">
+    <label> Baños </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[bathrooms]"
+      value="<%= appartment.bathrooms %>"
+    />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label> Piso </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[floor]"
+      value="<%= appartment.floor %>"
+    />
+  </div>
+  <div class="form-group col-md-6">
+    <label> Orientacion </label>
+    <input
+      class="form-control"
+      name="appartment[orientation]"
+      value="<%= appartment.orientation %>"
+    />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label> Superficie útil </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[useful_surface]"
+      value="<%= appartment.useful_surface %>"
+    />
+  </div>
+  <div class="form-group col-md-6">
+    <label> Superficie total </label>
+    <input
+      class="form-control"
+      type="number"
+      name="appartment[total_surface]"
+      value="<%= appartment.total_surface %>"
+    />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6" style="text-align: center;">
+    <label>
+      Walk in closet
+      <input
+        class="form-control"
+        type="checkbox"
+        name="appartment[walk_in_closet]"
+        value="true"
+        <% if appartment.walk_in_closet %>checked<% end %>
+      />
+    </label>
+  </div>
+  <div class="form-group col-md-6" style="text-align: center;">
+    <label>
+      Duplex
+      <input
+        class="form-control"
+        type="checkbox"
+        name="appartment[duplex]"
+        value="true"
+        <% if appartment.duplex %>checked<% end %>
+      />
+    </label>
+  </div>
+</div>
+
+<div class="form-row" style="align-items: center;">
+  <div class="form-group col-md-2">
+    <label>
+      Rechazado
+      <input
+        class="form-control"
+        type="checkbox"
+        name="appartment[rejected]"
+        value="true"
+        <% if appartment.rejected %>checked<% end %>
+      />
+    </label>
+  </div>
+  <div class="form-group col-md-10">
+    <label> Razon de rechazo </label>
+    <textarea
+      class="form-control"
+      name="appartment[reject_reason]"
+    ><%= appartment.reject_reason %></textarea>
+  </div>
+</div>

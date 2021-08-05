@@ -1,5 +1,7 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <p id="notice"><%= notice %></p>
 <a href="/"> Home </a>
@@ -11,7 +13,6 @@
     <tr style="cursor: pointer;">
       <th>#</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=commune';">Comuna</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=url';">Url</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=cost';">Precio</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=common_expenses';">Gastos comunes</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=total_cost';">Costo total</th>
@@ -25,7 +26,7 @@
       <th onclick="window.location.href = '/appartments/analysis?order_by=walk_in_closet';">Walkin closet</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th>
       <th>Contacto</th>
-      <th colspan="1"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -34,14 +35,6 @@
       <tr onmouseover="this.style.backgroundColor='antiquewhite';" onmouseout="this.style.backgroundColor='white';">
         <td> <%= i + 1 %> </td>
         <td><%= @appartments[i].commune %></td>
-        <td style="
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          max-width: 15rem;
-          overflow: hidden;
-        ">
-          <a href="<%= @appartments[i].url %>" target="_blank"><%= @appartments[i].url %></a>
-        </td>
         <td><%= @appartments[i].cost %></td>
         <td><%= @appartments[i].common_expenses %></td>
         <td
@@ -89,8 +82,95 @@
         <% else %>
         <td></td>
         <% end %>
-        <td><a href="/appartments/<%= @appartments[i].id %>">Ver</a></td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#appartmentModal<%= @appartments[i].id %>"
+            style="font-size: small;"
+          >
+            Ver <br /> Departamento
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#visitCommentModal<%= @appartments[i].id %>"
+            style="font-size: small;"
+          >
+            Ver <br /> Comentarios
+          </button>
+        </td>
       </tr>
+      <div
+        class="modal fade bd-example-modal-lg"
+        id="appartmentModal<%= @appartments[i].id %>"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="appartmentModalLabel"
+        aria-hidden="true"
+        data-backdrop="static"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <form
+              action="/appartments/<%= @appartments[i].id %>"
+              accept-charset="UTF-8"
+              method="POST"
+            >
+              <div class="modal-header">
+                <h5 class="modal-title" id="appartmentModalLabel">Departamento <%= i+1 %> (<%= @appartments[i].commune %>) #<%= @appartments[i].external_id %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <%= render 'appartment_form', appartment: @appartments[i] %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Editar departamento</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade bd-example-modal-lg"
+        id="visitCommentModal<%= @appartments[i].id %>"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="visitCommentModalLabel"
+        aria-hidden="true"
+        data-backdrop="static"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <form
+              action="/visit_comments<% if @appartments[i].visit_comment %>/<%= @appartments[i].visit_comment.id %><% end %>"
+              accept-charset="UTF-8"
+              method="POST"
+            >
+              <div class="modal-header">
+                <h5 class="modal-title" id="visitCommentModalLabel"> Comentarios Visita departamento <%= i+1 %> #<%= @appartments[i].external_id %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <%= render 'visit_comment_form', visit_comment: (@appartments[i].visit_comment || VisitComment.new()) %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Editar departamento</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     <% end %>
   </tbody>
 </table>
