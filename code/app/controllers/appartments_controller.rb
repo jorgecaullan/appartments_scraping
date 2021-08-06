@@ -1,3 +1,4 @@
+include ApplicationHelper
 class AppartmentsController < ApplicationController
   before_action :set_appartment, only: %i[ show edit update destroy ]
   skip_before_action :test_cookie, only: [:auth]

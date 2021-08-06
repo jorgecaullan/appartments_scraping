@@ -13,18 +13,18 @@
     <tr style="cursor: pointer;">
       <th>#</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=commune';">Comuna</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=cost';">Precio</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=common_expenses';">Gastos comunes</th>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=cost';">Precio</th><% end %>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=common_expenses';">Gastos comunes</th><% end %>
       <th onclick="window.location.href = '/appartments/analysis?order_by=total_cost';">Costo total</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=bedrooms';">Dormitorios</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=bathrooms';">Baños</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=floor';">Piso</th>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=floor';">Piso</th><% end %>
       <th onclick="window.location.href = '/appartments/analysis?order_by=orientation';">Orientacion</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=useful_surface';">Superficie util</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=total_surface';">Superficie total</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=duplex';">Duplex</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=walk_in_closet';">Walkin closet</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=total_surface';">Superficie total</th><% end %>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=duplex';">Duplex</th><% end %>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=walk_in_closet';">Walkin closet</th><% end %>
+      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th><% end %>
       <th>Contacto</th>
       <th colspan="2"></th>
     </tr>
@@ -35,8 +35,8 @@
       <tr onmouseover="this.style.backgroundColor='antiquewhite';" onmouseout="this.style.backgroundColor='white';">
         <td> <%= i + 1 %> </td>
         <td><%= @appartments[i].commune %></td>
-        <td><%= @appartments[i].cost %></td>
-        <td><%= @appartments[i].common_expenses %></td>
+        <% if device != "mobile" %><td><%= @appartments[i].cost %></td><% end %>
+        <% if device != "mobile" %><td><%= @appartments[i].common_expenses %></td><% end %>
         <td
           style="background-color:
             <%=Appartment.set_color(
@@ -63,7 +63,7 @@
               @appartments[i].bathrooms
             ) %>"
         ><%= @appartments[i].bathrooms %></td>
-        <td><%= @appartments[i].floor %></td>
+        <% if device != "mobile" %><td><%= @appartments[i].floor %></td><% end %>
         <td><%= @appartments[i].orientation %></td>
         <td
           style="background-color:
@@ -73,15 +73,13 @@
               @appartments[i].useful_surface
             ) %>"
         ><%= @appartments[i].useful_surface %></td>
-        <td><%= @appartments[i].total_surface %></td>
-        <td <% if @appartments[i].duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].duplex %></td>
-        <td <% if @appartments[i].walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].walk_in_closet %></td>
-        <td><%= @appartments[i].published %></td>
-        <% unless @appartments[i].visit_comment.nil? %>
-        <td><%= @appartments[i].visit_comment.contact %></td>
-        <% else %>
-        <td></td>
-        <% end %>
+        <% if device != "mobile" %><td><%= @appartments[i].total_surface %></td><% end %>
+        <% if device != "mobile" %><td <% if @appartments[i].duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].duplex %></td><% end %>
+        <% if device != "mobile" %><td <% if @appartments[i].walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].walk_in_closet %></td><% end %>
+        <% if device != "mobile" %><td><%= @appartments[i].published %></td><% end %>
+        <td>
+          <% unless @appartments[i].visit_comment.nil? %><%= @appartments[i].visit_comment.contact %><% end %>
+        </td>
         <td>
           <button
             type="button"
@@ -161,11 +159,11 @@
                 </button>
               </div>
               <div class="modal-body">
-                <%= render 'visit_comment_form', visit_comment: (@appartments[i].visit_comment || VisitComment.new()) %>
+                <%= render 'visit_comment_form', visit_comment: (@appartments[i].visit_comment || VisitComment.new()), appartment: @appartments[i] %>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Editar departamento</button>
+                <button type="submit" class="btn btn-primary">Editar comentarios</button>
               </div>
             </form>
           </div>

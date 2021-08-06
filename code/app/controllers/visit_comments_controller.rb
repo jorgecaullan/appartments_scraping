@@ -25,7 +25,7 @@ class VisitCommentsController < ApplicationController
 
     respond_to do |format|
       if @visit_comment.save
-        format.html { redirect_to "/appartments/#{@visit_comment.appartment_id}", notice: "Visit comment was successfully created." }
+        format.html { redirect_back(fallback_location: '/') }
         format.json { render :show, status: :created, location: @visit_comment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class VisitCommentsController < ApplicationController
   def update
     respond_to do |format|
       if @visit_comment.update(visit_comment_params)
-        format.html { redirect_to "/appartments/#{@visit_comment.appartment_id}", notice: "Visit comment was successfully updated." }
+        format.html { redirect_back(fallback_location: '/') }
         format.json { render :show, status: :ok, location: @visit_comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
