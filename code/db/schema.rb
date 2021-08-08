@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_125611) do
+ActiveRecord::Schema.define(version: 2021_08_08_164102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2021_08_04_125611) do
     t.datetime "updated_at", null: false
     t.boolean "duplex"
     t.boolean "walk_in_closet"
+    t.boolean "like_jorge"
+    t.boolean "like_mayra"
     t.index ["external_id"], name: "index_appartments_on_external_id", unique: true
     t.index ["filter_id"], name: "index_appartments_on_filter_id"
   end

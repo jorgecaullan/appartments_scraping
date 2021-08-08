@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+<h2>
+  <a href="/"> Inicio </a> -
+  <a href="/appartments/analysis/map"> Analizar </a> -
+  <a href="/appartments/rejected/map"> Rechazados </a> -
+  <a href="/appartments/sold/map"> Vendidos </a>
+</h2>
+
+<!DOCTYPE html><html>
+<meta charset="utf-8" />
+<head>
+	<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <style>
+    #map {
+    widh: 50px;
+    height: 600px; }
+  </style>
+
+</head>
+  <body>
+  <div id="map"></div>
+<script>
+
+var map = L.map('map').
+setView([-33.4354425, -70.5844901], 14);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    maxZoom: 18
+}).addTo(map);
+
+L.control.scale().addTo(map);
+<% @appartments.each do |appartment| %>
+  L.marker([<%= appartment.latitude %>, <%= appartment.longitude %>])
+    .addTo(map)
+    .bindPopup(
+      'Costo: <%= appartment.cost %><br>'+
+      'Gastos Comunes: <%= appartment.common_expenses %><br>'+
+      'Costo Total: <%= appartment.cost+(appartment.common_expenses || 0) %><br>'+
+      '<a href="<%= appartment.url %>" target="_blank">link</a>'
+    );
+<% end %>
+
+ </script>
+ </body>
+ </html>

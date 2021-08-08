@@ -30,6 +30,8 @@ class AppartmentsController < ApplicationController
       .includes(:visit_comment)
       .where(sold_out: nil)
       .where(rejected: nil)
+      .where(like_jorge: nil)
+      .where(like_mayra: nil)
       .select('appartments.*, filters.commune')
 
     total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
@@ -57,12 +59,170 @@ class AppartmentsController < ApplicationController
     end
   end
 
-  def index_map
+  def index_liked
     @appartments = Appartment
       .joins(:filter)
       .includes(:visit_comment)
       .where(sold_out: nil)
       .where(rejected: nil)
+      .where("like_jorge=true OR like_mayra=true")
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+
+    order_by = request.params['order_by']
+    if order_by
+      if order_by == 'total_cost'
+        @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
+      else
+        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
+          'ASC'
+        else
+          'DESC'
+        end
+        @appartments = @appartments.order("#{order_by} #{order_dir}")
+      end
+    end
+  end
+
+  def index_rejected
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: nil)
+      .where(rejected: true)
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+
+    order_by = request.params['order_by']
+    if order_by
+      if order_by == 'total_cost'
+        @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
+      else
+        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
+          'ASC'
+        else
+          'DESC'
+        end
+        @appartments = @appartments.order("#{order_by} #{order_dir}")
+      end
+    end
+  end
+
+  def index_sold
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: true)
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+
+    order_by = request.params['order_by']
+    if order_by
+      if order_by == 'total_cost'
+        @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
+      else
+        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
+          'ASC'
+        else
+          'DESC'
+        end
+        @appartments = @appartments.order("#{order_by} #{order_dir}")
+      end
+    end
+  end
+
+  def index_map_analysis
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: nil)
+      .where(rejected: nil)
+      .where(like_jorge: nil)
+      .where(like_mayra: nil)
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+  end
+
+  def index_map_liked
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: nil)
+      .where(rejected: nil)
+      .where("like_jorge=true OR like_mayra=true")
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+  end
+
+  def index_map_rejected
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: nil)
+      .where(rejected: true)
+      .select('appartments.*, filters.commune')
+
+    total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
+    @best_total_cost = total_cost_map.min
+    @worst_total_cost = total_cost_map.max
+    @best_bedrooms = @appartments.minimum('bedrooms')
+    @worst_bedrooms = @appartments.maximum('bedrooms')
+    @best_bathrooms = @appartments.minimum('bathrooms')
+    @worst_bathrooms = @appartments.maximum('bathrooms')
+    @best_useful_surface = @appartments.minimum('useful_surface')
+    @worst_useful_surface = @appartments.maximum('useful_surface')
+  end
+
+  def index_map_sold
+    @appartments = Appartment
+      .joins(:filter)
+      .includes(:visit_comment)
+      .where(sold_out: true)
       .select('appartments.*, filters.commune')
 
     total_cost_map = @appartments.map{|e| e.cost+(e.common_expenses || 0)}
@@ -154,6 +314,8 @@ class AppartmentsController < ApplicationController
         :sold_date,
         :duplex,
         :walk_in_closet,
+        :like_jorge,
+        :like_mayra,
         :rejected,
         :reject_reason
       )

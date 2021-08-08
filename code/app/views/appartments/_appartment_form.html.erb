@@ -133,6 +133,33 @@
   </div>
 </div>
 
+<div class="form-row">
+  <div class="form-group col-md-6" style="text-align: center;">
+    <label>
+      Aprobado Jorge
+      <input
+        class="form-control"
+        type="checkbox"
+        name="appartment[like_jorge]"
+        value="true"
+        <% if appartment.like_jorge %>checked<% end %>
+      />
+    </label>
+  </div>
+  <div class="form-group col-md-6" style="text-align: center;">
+    <label>
+      Aprobado Mayra
+      <input
+        class="form-control"
+        type="checkbox"
+        name="appartment[like_mayra]"
+        value="true"
+        <% if appartment.like_mayra %>checked<% end %>
+      />
+    </label>
+  </div>
+</div>
+
 <div class="form-row" style="align-items: center;">
   <div class="form-group col-md-2">
     <label>

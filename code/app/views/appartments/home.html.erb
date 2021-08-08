@@ -1,9 +1,29 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<h1> Indice </h1>
+<div class="container">
+  <div class="row">
+    <h1> Indice </h1>
+    <h3><a href="/filters"> Filtros </a></h3>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col">
+      <h2>Listas de Departamentos</h2>
 
-<h3><a href="/filters"> Filtros </a></h3>
-<h3><a href="/appartments/analysis"> Departamentos </a></h3>
-<h3><a href="/appartments/map"> Mapa </a></h3>
-<h3><a href="/appartments"> Departamentos rechazados </a></h3>
+      <h3><a href="/appartments/analysis"> Por analizar </a></h3>
+      <h3><a href="/appartments/liked"> Pre-Aprobados </a></h3>
+      <h3><a href="/appartments/rejected"> Rechazados </a></h3>
+      <h3><a href="/appartments/sold"> Vendidos </a></h3>
+    </div>
+    <div class="col">
+      <h2>Mapas de Departamentos</h2>
+
+      <h3><a href="/appartments/analysis/map"> Por analizar </a></h3>
+      <h3><a href="/appartments/liked/map"> Pre-Aprobados </a></h3>
+      <h3><a href="/appartments/rejected/map"> Rechazados </a></h3>
+      <h3><a href="/appartments/sold/map"> Vendidos </a></h3>
+    </div>
+  </div>
+</div>
