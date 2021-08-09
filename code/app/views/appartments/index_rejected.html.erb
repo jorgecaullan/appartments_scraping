@@ -27,10 +27,7 @@
       <th onclick="window.location.href = '/appartments/analysis?order_by=orientation';">Orientacion</th>
       <th onclick="window.location.href = '/appartments/analysis?order_by=useful_surface';">Superficie util</th>
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=total_surface';">Superficie total</th><% end %>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=duplex';">Duplex</th><% end %>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=walk_in_closet';">Walkin closet</th><% end %>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th><% end %>
-      <th>Contacto</th>
+      <th>Razon de rechazo</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -79,12 +76,7 @@
             ) %>"
         ><%= @appartments[i].useful_surface %></td>
         <% if device != "mobile" %><td><%= @appartments[i].total_surface %></td><% end %>
-        <% if device != "mobile" %><td <% if @appartments[i].duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].duplex %></td><% end %>
-        <% if device != "mobile" %><td <% if @appartments[i].walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].walk_in_closet %></td><% end %>
-        <% if device != "mobile" %><td><%= @appartments[i].published %></td><% end %>
-        <td>
-          <% unless @appartments[i].visit_comment.nil? %><%= @appartments[i].visit_comment.contact %><% end %>
-        </td>
+        <td><%= @appartments[i].reject_reason %></td>
         <td>
           <button
             type="button"
@@ -177,7 +169,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New @Appartments[i]', new_appartment_path %>
