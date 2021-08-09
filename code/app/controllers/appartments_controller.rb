@@ -49,7 +49,7 @@ class AppartmentsController < ApplicationController
       if order_by == 'total_cost'
         @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
       else
-        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
+        order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex', 'walk_in_closet'].include?(order_by)
           'ASC'
         else
           'DESC'
@@ -147,6 +147,8 @@ class AppartmentsController < ApplicationController
     if order_by
       if order_by == 'total_cost'
         @appartments = @appartments.sort_by{|e| e['cost']+(e['common_expenses'] || 0)}
+      elsif order_by == 'duration'
+        @appartments = @appartments.sort_by{|e| (e.sold_date.to_time.to_i - e.published.to_time.to_i)/60/60/24}
       else
         order_dir = if ['cost', 'common_expenses', 'total_cost', 'duplex'].include?(order_by)
           'ASC'

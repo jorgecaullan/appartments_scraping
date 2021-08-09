@@ -17,19 +17,19 @@
   <thead>
     <tr style="cursor: pointer;">
       <th>#</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=commune';">Comuna</th>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=cost';">Precio</th><% end %>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=common_expenses';">Gastos comunes</th><% end %>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=total_cost';">Costo total</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=bedrooms';">Dormitorios</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=bathrooms';">Baños</th>
-      <% if device != "mobile" %><th onclick="window.location.href = '/appartments/analysis?order_by=floor';">Piso</th><% end %>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=orientation';">Orientacion</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=useful_surface';">Superficie util</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha de publicacion</th>
-      <th onclick="window.location.href = '/appartments/analysis?order_by=published';">Fecha venta</th>
-      <th>Rechazado</th>
-      <th>Razon rechazo</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=commune';">Comuna</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=total_cost';">Costo total</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=bedrooms';">Dormitorios</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=bathrooms';">Baños</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=orientation';">Orientacion</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=useful_surface';">Superficie útil</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=like_jorge';">Like Jorge</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=like_mayra';">Like Mayra</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=published';">Fecha de publicación</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=sold_date';">Fecha venta</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=duration';">Duración (dias)</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=published';">Rechazado</th>
+      <th onclick="window.location.href = '/appartments/sold?order_by=published';">Razon rechazo</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -39,8 +39,6 @@
       <tr onmouseover="this.style.backgroundColor='antiquewhite';" onmouseout="this.style.backgroundColor='white';">
         <td> <%= i + 1 %> </td>
         <td><%= @appartments[i].commune %></td>
-        <% if device != "mobile" %><td><%= @appartments[i].cost %></td><% end %>
-        <% if device != "mobile" %><td><%= @appartments[i].common_expenses %></td><% end %>
         <td
           style="background-color:
             <%=Appartment.set_color(
@@ -67,7 +65,6 @@
               @appartments[i].bathrooms
             ) %>"
         ><%= @appartments[i].bathrooms %></td>
-        <% if device != "mobile" %><td><%= @appartments[i].floor %></td><% end %>
         <td><%= @appartments[i].orientation %></td>
         <td
           style="background-color:
@@ -77,9 +74,11 @@
               @appartments[i].useful_surface
             ) %>"
         ><%= @appartments[i].useful_surface %></td>
-        <% if device != "mobile" %><td><%= @appartments[i].total_surface %></td><% end %>
+        <td><%= @appartments[i].like_jorge %></td>
+        <td><%= @appartments[i].like_mayra %></td>
         <td><%= @appartments[i].published %></td>
-        <td><%= @appartments[i].sold_out %></td>
+        <td><%= @appartments[i].sold_date %></td>
+        <td><%= (@appartments[i].sold_date.to_time.to_i - @appartments[i].published.to_time.to_i)/60/60/24 %></td>
         <td><%= @appartments[i].rejected %></td>
         <td><%= @appartments[i].reject_reason %></td>
         <td>
