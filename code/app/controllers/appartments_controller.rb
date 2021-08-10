@@ -269,7 +269,14 @@ class AppartmentsController < ApplicationController
   # PATCH/PUT /appartments/1 or /appartments/1.json
   def update
     respond_to do |format|
-      if @appartment.update(appartment_params)
+      @appartment.assign_attributes(appartment_params)
+      @appartment.sold_out = nil unless appartment_params[:sold_out]
+      @appartment.rejected = nil unless appartment_params[:rejected]
+      @appartment.duplex = nil unless appartment_params[:duplex]
+      @appartment.walk_in_closet = nil unless appartment_params[:walk_in_closet]
+      @appartment.like_jorge = nil unless appartment_params[:like_jorge]
+      @appartment.like_mayra = nil unless appartment_params[:like_mayra]
+      if @appartment.save
         format.html { redirect_back(fallback_location: '/') }
         format.json { render :show, status: :ok, location: @appartment }
       else
