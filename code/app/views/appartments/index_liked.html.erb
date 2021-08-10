@@ -30,6 +30,7 @@
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/liked?order_by=duplex';">Duplex</th><% end %>
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/liked?order_by=walk_in_closet';">Walkin closet</th><% end %>
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/liked?order_by=published';">Fecha de publicacion</th><% end %>
+      <th>Aprobado por</th>
       <th>Contacto</th>
       <th colspan="2"></th>
     </tr>
@@ -82,6 +83,13 @@
         <% if device != "mobile" %><td <% if @appartments[i].duplex %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].duplex %></td><% end %>
         <% if device != "mobile" %><td <% if @appartments[i].walk_in_closet %> style="background-color: rgb(87, 187, 138)"<% end %>><%= @appartments[i].walk_in_closet %></td><% end %>
         <% if device != "mobile" %><td><%= @appartments[i].published %></td><% end %>
+        <% if @appartments[i].like_jorge && @appartments[i].like_mayra %>
+          <td> Ambos </td>
+        <% elsif @appartments[i].like_jorge %>
+          <td> Jorge </td>
+        <% elsif @appartments[i].like_mayra %>
+          <td> Mayra </td>
+        <% end %>
         <td>
           <% unless @appartments[i].visit_comment.nil? %><%= @appartments[i].visit_comment.contact %><% end %>
         </td>
