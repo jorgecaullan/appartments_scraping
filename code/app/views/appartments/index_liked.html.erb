@@ -32,6 +32,7 @@
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/liked?order_by=published';">Fecha de publicacion</th><% end %>
       <th>Aprobado por</th>
       <th>Contacto</th>
+      <th>Comentarios</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -92,6 +93,9 @@
         <% end %>
         <td>
           <% unless @appartments[i].visit_comment.nil? %><%= @appartments[i].visit_comment.contact %><% end %>
+        </td>
+        <td>
+          <% unless @appartments[i].visit_comment.nil? %><%= @appartments[i].visit_comment.extra_comments %><% end %>
         </td>
         <td>
           <button

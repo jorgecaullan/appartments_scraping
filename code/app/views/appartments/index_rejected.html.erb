@@ -27,6 +27,7 @@
       <th onclick="window.location.href = '/appartments/rejected?order_by=orientation';">Orientacion</th>
       <th onclick="window.location.href = '/appartments/rejected?order_by=useful_surface';">Superficie util</th>
       <% if device != "mobile" %><th onclick="window.location.href = '/appartments/rejected?order_by=total_surface';">Superficie total</th><% end %>
+      <th>Aprobado por</th>
       <th>Razon de rechazo</th>
       <th colspan="2"></th>
     </tr>
@@ -76,6 +77,15 @@
             ) %>"
         ><%= @appartments[i].useful_surface %></td>
         <% if device != "mobile" %><td><%= @appartments[i].total_surface %></td><% end %>
+        <td>
+          <% if @appartments[i].like_jorge && @appartments[i].like_mayra %>
+            Ambos
+          <% elsif @appartments[i].like_jorge %>
+            Jorge
+          <% elsif @appartments[i].like_mayra %>
+            Mayra
+          <% end %>
+        </td>
         <td><%= @appartments[i].reject_reason %></td>
         <td>
           <button
