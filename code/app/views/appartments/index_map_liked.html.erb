@@ -43,7 +43,7 @@ L.control.scale().addTo(map);
   L.marker([<%= appartment.latitude %>, <%= appartment.longitude %>])
     .addTo(map)
     .bindPopup(
-      'Costo Total: <%= appartment.cost+(appartment.common_expenses || 0) %><br><br>'+
+      '<%= (appartment.visit_comment || VisitComment.new()).address || 'Dirección desconocida' %><br><br>'+
       '<button'+
       '  type="button"'+
       '  class="btn btn-primary"'+
