@@ -1,6 +1,18 @@
+<script>
+window.onload = () => {
+  const auth = localStorage.getItem('master-password');
+  if ('<%= params['master-password'] %>' === '' && auth) {
+    window.location.href = '/auth?master-password='+auth;
+  }
+}
+function setPassword() {
+  localStorage.setItem('master-password', document.getElementById('password').value);
+}
+</script>
+
 <p> Ingresar clave de autorizacion </p>
-<form>
-  <input name="master-password" value="<%= @password %>"/>
+<form onsubmit="setPassword()">
+  <input id="password" name="master-password" value="<%= @password %>"/>
   <button> Submit </button>
 </form>
 
