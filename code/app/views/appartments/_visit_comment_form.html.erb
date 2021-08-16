@@ -29,6 +29,14 @@
       value="<%= visit_comment.contact %>"
     />
   </div>
+  <% unless visit_comment.contact.blank? %>
+    <a
+      href="https://api.whatsapp.com/send?phone=<%= visit_comment.contact %>&text=Hola! estaba interesado en este departamento y queria agendar una visita. Puedo todos los dias desde las 6pm en adelante. <%= appartment.url %>"
+      target="_blank"
+    >
+      Contactar por WhatsApp
+    </a>
+  <% end %>
 </div>
 
 <div class="form-group">
