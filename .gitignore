@@ -43,7 +43,3 @@ code/tmp/*
 .env
 
 cron.log
-
-# Docker volume bak folder
-bak
-code/bak

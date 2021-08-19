@@ -28,7 +28,7 @@ every 6.hours do
   rake "get_appartments"
 end
 
-# alwais after modify this file run: 'whenever --update-crontab'
+# always after modify this file run: 'whenever --update-crontab'
 
 # to see command what will be used to execute cronjob, run: 'crontab -l'
 
