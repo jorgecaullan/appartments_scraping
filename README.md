@@ -29,7 +29,7 @@ y esperar hasta ver un mensaje como el siguiente
 
 ```sh
 => Booting Puma
-=> Rails 5.2.6 application starting in development 
+=> Rails 5.2.6 application starting in development
 => Run `rails server -h` for more startup options
 Puma starting in single mode...
 * Version 3.12.6 (ruby 2.5.1-p57), codename: Llamas in Pajamas
@@ -122,7 +122,7 @@ Las categorias por defecto que apareceran coloreadas son `Costo total`, `Dormito
 
 En caso de que tambien estes interesado en analizar los departamentos acorde a su ubicacion, tienes la opcion de ingresar a las vistas del mapa para ir filtrando mas a medida en los que estas interesado y los que no (ya sea por que estan muy lejos de un metro u otras razones).
 
-NOTA: Se recomienda que manualmente se modifique el centro y zoom de las vistas de los mapas (`/code/app/views/appartments/index_map_*.html.erb`) para ajustarlo a las zonas donde buscas.
+NOTA: Se recomienda que manualmente se modifique el centro y zoom de las vistas de los mapas (`/code/app/views/appartments/_map.html.erb` en la linea que dice `setView([-33.4354425, -70.5844901], 14);`) para ajustarlo a las zonas donde buscas.
 
 ## Nota
 
