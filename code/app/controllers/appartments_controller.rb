@@ -16,14 +16,6 @@ class AppartmentsController < ApplicationController
   def home
   end
 
-  # GET /appartments or /appartments.json
-  def index
-    @appartments = Appartment
-      .joins(:filter)
-      .where('sold_out = true OR rejected = true')
-      .select('appartments.*, filters.commune')
-  end
-
   def index_analysis
     @appartments = Appartment
       .joins(:filter)
@@ -43,6 +35,97 @@ class AppartmentsController < ApplicationController
     @worst_bathrooms = @appartments.maximum('bathrooms')
     @best_useful_surface = @appartments.minimum('useful_surface')
     @worst_useful_surface = @appartments.maximum('useful_surface')
+
+    @table = [
+      {
+        header: '#',
+        dynamic_value: 'i + 1'
+      },
+      {
+        header: 'Comuna',
+        dynamic_value: '@appartments[i].commune',
+        sort_route: '/appartments/analysis?order_by=commune',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Precio',
+        dynamic_value: '@appartments[i].cost',
+        sort_route: '/appartments/analysis?order_by=cost',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Gastos comunes',
+        dynamic_value: '@appartments[i].common_expenses',
+        sort_route: '/appartments/analysis?order_by=common_expenses',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Costo total',
+        dynamic_value: '@appartments[i].cost + (@appartments[i].common_expenses || 0)',
+        sort_route: '/appartments/analysis?order_by=total_cost',
+        dynamic_color: 'Appartment.set_color(@best_total_cost, @worst_total_cost, @appartments[i].cost + (@appartments[i].common_expenses || 0))',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Dormitorios',
+        dynamic_value: '@appartments[i].bedrooms',
+        sort_route: '/appartments/analysis?order_by=bedrooms',
+        dynamic_color: 'Appartment.set_color(@worst_bedrooms, @best_bedrooms, @appartments[i].bedrooms)',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Baños',
+        dynamic_value: '@appartments[i].bathrooms',
+        sort_route: '/appartments/analysis?order_by=bathrooms',
+        dynamic_color: 'Appartment.set_color(@worst_bathrooms, @best_bathrooms, @appartments[i].bathrooms)',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Piso',
+        dynamic_value: '@appartments[i].floor',
+        sort_route: '/appartments/analysis?order_by=floor',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Orientación',
+        dynamic_value: '@appartments[i].orientation',
+        sort_route: '/appartments/analysis?order_by=orientation',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Superficie útil',
+        dynamic_value: '@appartments[i].useful_surface',
+        sort_route: '/appartments/analysis?order_by=useful_surface',
+        dynamic_color: 'Appartment.set_color(@worst_useful_surface, @best_useful_surface, @appartments[i].useful_surface)',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Superficie total',
+        dynamic_value: '@appartments[i].total_surface',
+        sort_route: '/appartments/analysis?order_by=total_surface',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Duplex',
+        dynamic_value: '@appartments[i].duplex',
+        sort_route: '/appartments/analysis?order_by=duplex',
+        static_color: 'rgb(87, 187, 138)',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Walkin closet',
+        dynamic_value: '@appartments[i].walk_in_closet',
+        sort_route: '/appartments/analysis?order_by=walk_in_closet',
+        static_color: 'rgb(87, 187, 138)',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Fecha de publicación',
+        dynamic_value: '@appartments[i].published',
+        sort_route: '/appartments/analysis?order_by=published',
+        hide_on_mobile: true,
+      }
+    ]
 
     order_by = request.params['order_by']
     if order_by
@@ -236,63 +319,6 @@ class AppartmentsController < ApplicationController
     @worst_bathrooms = @appartments.maximum('bathrooms')
     @best_useful_surface = @appartments.minimum('useful_surface')
     @worst_useful_surface = @appartments.maximum('useful_surface')
-  end
-
-  # GET /appartments/1 or /appartments/1.json
-  def show
-  end
-
-  # GET /appartments/new
-  def new
-    @appartment = Appartment.new
-  end
-
-  # GET /appartments/1/edit
-  def edit
-  end
-
-  # POST /appartments or /appartments.json
-  def create
-    @appartment = Appartment.new(appartment_params)
-
-    respond_to do |format|
-      if @appartment.save
-        format.html { redirect_to @appartment, notice: "Appartment was successfully created." }
-        format.json { render :show, status: :created, location: @appartment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @appartment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /appartments/1 or /appartments/1.json
-  def update
-    respond_to do |format|
-      @appartment.assign_attributes(appartment_params)
-      @appartment.sold_out = nil unless appartment_params[:sold_out]
-      @appartment.rejected = nil unless appartment_params[:rejected]
-      @appartment.duplex = nil unless appartment_params[:duplex]
-      @appartment.walk_in_closet = nil unless appartment_params[:walk_in_closet]
-      @appartment.like_jorge = nil unless appartment_params[:like_jorge]
-      @appartment.like_mayra = nil unless appartment_params[:like_mayra]
-      if @appartment.save
-        format.html { redirect_back(fallback_location: '/') }
-        format.json { render :show, status: :ok, location: @appartment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @appartment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /appartments/1 or /appartments/1.json
-  def destroy
-    @appartment.destroy
-    respond_to do |format|
-      format.html { redirect_to appartments_url, notice: "Appartment was successfully destroyed." }
-      format.json { head :no_content }
-    end
   end
 
   private

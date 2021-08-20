@@ -1,0 +1,61 @@
+<table class="table">
+  <thead>
+    <tr style="cursor: pointer;">
+      <% @table.each do |field| %>
+        <% if !field[:hide_on_mobile] || device != "mobile" %>
+        <th
+          <% if field[:sort_route] %>
+          onclick="window.location.href = '<%= field[:sort_route] %>';"
+          <% end %>
+        >
+          <%= field[:header] %>
+        </th>
+        <% end %>
+      <% end %>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody style="text-align: center;">
+    <% for i in 0..@appartments.length-1 do %>
+      <tr onmouseover="this.style.backgroundColor='antiquewhite';" onmouseout="this.style.backgroundColor='white';">
+        <% @table.each do |field| %>
+          <% if !field[:hide_on_mobile] || device != "mobile" %>
+            <td
+              <% if field[:dynamic_color] %>
+              style="background-color: <%= eval(field[:dynamic_color]) %>"
+              <% elsif field[:static_color] && !!eval(field[:dynamic_value]) %>
+              style="background-color: <%= field[:static_color] %>"
+              <% end %>
+            >
+              <%= eval(field[:dynamic_value]) %>
+            </td>
+          <% end %>
+        <% end %>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#appartmentModal<%= @appartments[i].id %>"
+            style="font-size: small;"
+          >
+            Ver <br /> Departamento
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#visitCommentModal<%= @appartments[i].id %>"
+            style="font-size: small;"
+          >
+            Ver <br /> Comentarios
+          </button>
+        </td>
+      </tr>
+      <%= render 'modals', appartment: @appartments[i], i: i+1 %>
+    <% end %>
+  </tbody>
+</table>
