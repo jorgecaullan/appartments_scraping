@@ -1,0 +1,66 @@
+<div
+  class="modal fade bd-example-modal-lg"
+  id="appartmentModal<%= appartment.id %>"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="appartmentModalLabel"
+  aria-hidden="true"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form
+        action="/appartments/<%= appartment.id %>"
+        accept-charset="UTF-8"
+        method="POST"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="appartmentModalLabel">Departamento <%= i %> #<%= appartment.external_id %> (<%= appartment.commune %>)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render 'appartment_form', appartment: appartment %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Editar departamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade bd-example-modal-lg"
+  id="visitCommentModal<%= appartment.id %>"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="visitCommentModalLabel"
+  aria-hidden="true"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form
+        action="/visit_comments<% if appartment.visit_comment %>/<%= appartment.visit_comment.id %><% end %>"
+        accept-charset="UTF-8"
+        method="POST"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="visitCommentModalLabel"> Comentarios Visita departamento #<%= appartment.external_id %>(<%= appartment.commune %>)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render 'visit_comment_form', visit_comment: (appartment.visit_comment || VisitComment.new()), appartment: appartment %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Editar comentarios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

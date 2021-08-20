@@ -1,0 +1,53 @@
+<style>
+  #map {
+  widh: 50px;
+  height: 600px; }
+</style>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+
+  <script>
+    var map = L.map('map').
+    setView([-33.4354425, -70.5844901], 14);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18
+    }).addTo(map);
+
+    L.control.scale().addTo(map);
+    <% @appartments.each do |appartment| %>
+      L.marker([<%= appartment.latitude %>, <%= appartment.longitude %>])
+        .addTo(map)
+        .bindPopup(
+          '<%= (appartment.visit_comment || VisitComment.new()).address || 'Dirección desconocida' %><br><br>'+
+          '<button'+
+          '  type="button"'+
+          '  class="btn btn-primary"'+
+          '  data-toggle="modal"'+
+          '  data-target="#appartmentModal<%= appartment.id %>"'+
+          '  style="font-size: small;"'+
+          '>'+
+          '  Ver Departamento'+
+          '</button><br><br>'+
+          '<button'+
+          '  type="button"'+
+          '  class="btn btn-primary"'+
+          '  data-toggle="modal"'+
+          '  data-target="#visitCommentModal<%= appartment.id %>"'+
+          '  style="font-size: small;"'+
+          '>'+
+          '  Ver Comentarios'+
+          '</button>'
+        );
+    <% end %>
+  </script>
+
+  <% @appartments.each do |appartment| %>
+    <%= render 'modals', appartment: appartment, i: '' %>
+  <% end %>
+</body>
