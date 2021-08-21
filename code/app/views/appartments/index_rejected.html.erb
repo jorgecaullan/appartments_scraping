@@ -73,11 +73,11 @@
         ><%= @appartments[i].useful_surface %></td>
         <% if device != "mobile" %><td><%= @appartments[i].total_surface %></td><% end %>
         <td>
-          <% if @appartments[i].like_jorge && @appartments[i].like_mayra %>
+          <% if @appartments[i].like1 && @appartments[i].like2 %>
             Ambos
-          <% elsif @appartments[i].like_jorge %>
+          <% elsif @appartments[i].like1 %>
             Jorge
-          <% elsif @appartments[i].like_mayra %>
+          <% elsif @appartments[i].like2 %>
             Mayra
           <% end %>
         </td>

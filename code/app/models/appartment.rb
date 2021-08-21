@@ -152,6 +152,22 @@ class Appartment < ApplicationRecord
     return appartment_data
   end
 
+  def liked_by
+    if self.like1 && self.like2
+      "Ambos"
+    elsif self.like1
+      ENV['LIKE1_NAME']
+    elsif self.like2
+      ENV['LIKE2_NAME']
+    else
+      ''
+    end
+  end
+
+  def sold_duration
+    (self.sold_date.to_time.to_i - self.published.to_time.to_i)/60/60/24
+  end
+
   private
     def set_nils
       self.sold_out = nil if self.sold_out == false

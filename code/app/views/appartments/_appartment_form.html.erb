@@ -136,25 +136,25 @@
 <div class="form-row">
   <div class="form-group col-md-6" style="text-align: center;">
     <label>
-      Aprobado Jorge
+      Aprobado <%= ENV['LIKE1_NAME'] %>
       <input
         class="form-control"
         type="checkbox"
-        name="appartment[like_jorge]"
+        name="appartment[like1]"
         value="true"
-        <% if appartment.like_jorge %>checked<% end %>
+        <% if appartment.like1 %>checked<% end %>
       />
     </label>
   </div>
   <div class="form-group col-md-6" style="text-align: center;">
     <label>
-      Aprobado Mayra
+      Aprobado <%= ENV['LIKE2_NAME'] %>
       <input
         class="form-control"
         type="checkbox"
-        name="appartment[like_mayra]"
+        name="appartment[like2]"
         value="true"
-        <% if appartment.like_mayra %>checked<% end %>
+        <% if appartment.like2 %>checked<% end %>
       />
     </label>
   </div>
