@@ -164,80 +164,80 @@ class AppartmentsController < ApplicationController
       {
         header: 'Comuna',
         dynamic_value: '@appartments[i].commune',
-        sort_route: '/appartments/analysis?order_by=commune',
+        sort_route: '/appartments/liked?order_by=commune',
       },
       {
         header: 'Precio',
         dynamic_value: '@appartments[i].cost',
-        sort_route: '/appartments/analysis?order_by=cost',
+        sort_route: '/appartments/liked?order_by=cost',
         hide_on_mobile: true,
       },
       {
         header: 'Gastos comunes',
         dynamic_value: '@appartments[i].common_expenses',
-        sort_route: '/appartments/analysis?order_by=common_expenses',
+        sort_route: '/appartments/liked?order_by=common_expenses',
         hide_on_mobile: true,
       },
       {
         header: 'Costo total',
         dynamic_value: '@appartments[i].cost + (@appartments[i].common_expenses || 0)',
-        sort_route: '/appartments/analysis?order_by=total_cost',
+        sort_route: '/appartments/liked?order_by=total_cost',
         dynamic_color: 'Appartment.set_color(@best_total_cost, @worst_total_cost, @appartments[i].cost + (@appartments[i].common_expenses || 0))',
       },
       {
         header: 'Dormitorios',
         dynamic_value: '@appartments[i].bedrooms',
-        sort_route: '/appartments/analysis?order_by=bedrooms',
+        sort_route: '/appartments/liked?order_by=bedrooms',
         dynamic_color: 'Appartment.set_color(@worst_bedrooms, @best_bedrooms, @appartments[i].bedrooms)',
       },
       {
         header: 'Baños',
         dynamic_value: '@appartments[i].bathrooms',
-        sort_route: '/appartments/analysis?order_by=bathrooms',
+        sort_route: '/appartments/liked?order_by=bathrooms',
         dynamic_color: 'Appartment.set_color(@worst_bathrooms, @best_bathrooms, @appartments[i].bathrooms)',
       },
       {
         header: 'Piso',
         dynamic_value: '@appartments[i].floor',
-        sort_route: '/appartments/analysis?order_by=floor',
+        sort_route: '/appartments/liked?order_by=floor',
         hide_on_mobile: true,
       },
       {
         header: 'Orientación',
         dynamic_value: '@appartments[i].orientation',
-        sort_route: '/appartments/analysis?order_by=orientation',
+        sort_route: '/appartments/liked?order_by=orientation',
         hide_on_mobile: true,
       },
       {
         header: 'Superficie útil',
         dynamic_value: '@appartments[i].useful_surface',
-        sort_route: '/appartments/analysis?order_by=useful_surface',
+        sort_route: '/appartments/liked?order_by=useful_surface',
         dynamic_color: 'Appartment.set_color(@worst_useful_surface, @best_useful_surface, @appartments[i].useful_surface)',
       },
       {
         header: 'Superficie total',
         dynamic_value: '@appartments[i].total_surface',
-        sort_route: '/appartments/analysis?order_by=total_surface',
+        sort_route: '/appartments/liked?order_by=total_surface',
         hide_on_mobile: true,
       },
       {
         header: 'Duplex',
         dynamic_value: '@appartments[i].duplex',
-        sort_route: '/appartments/analysis?order_by=duplex',
+        sort_route: '/appartments/liked?order_by=duplex',
         static_color: 'rgb(87, 187, 138)',
         hide_on_mobile: true,
       },
       {
         header: 'Walkin closet',
         dynamic_value: '@appartments[i].walk_in_closet',
-        sort_route: '/appartments/analysis?order_by=walk_in_closet',
+        sort_route: '/appartments/liked?order_by=walk_in_closet',
         static_color: 'rgb(87, 187, 138)',
         hide_on_mobile: true,
       },
       {
         header: 'Fecha de publicación',
         dynamic_value: '@appartments[i].published',
-        sort_route: '/appartments/analysis?order_by=published',
+        sort_route: '/appartments/liked?order_by=published',
         hide_on_mobile: true,
       },
       {
@@ -287,6 +287,77 @@ class AppartmentsController < ApplicationController
     @best_useful_surface = @appartments.minimum('useful_surface')
     @worst_useful_surface = @appartments.maximum('useful_surface')
 
+    @table = [
+      {
+        header: '#',
+        dynamic_value: 'i + 1'
+      },
+      {
+        header: 'Comuna',
+        dynamic_value: '@appartments[i].commune',
+        sort_route: '/appartments/rejected?order_by=commune',
+      },
+      {
+        header: 'Precio',
+        dynamic_value: '@appartments[i].cost',
+        sort_route: '/appartments/rejected?order_by=cost',
+      },
+      {
+        header: 'Gastos comunes',
+        dynamic_value: '@appartments[i].common_expenses',
+        sort_route: '/appartments/rejected?order_by=common_expenses',
+      },
+      {
+        header: 'Costo total',
+        dynamic_value: '@appartments[i].cost + (@appartments[i].common_expenses || 0)',
+        sort_route: '/appartments/rejected?order_by=total_cost',
+        dynamic_color: 'Appartment.set_color(@best_total_cost, @worst_total_cost, @appartments[i].cost + (@appartments[i].common_expenses || 0))',
+      },
+      {
+        header: 'Dormitorios',
+        dynamic_value: '@appartments[i].bedrooms',
+        sort_route: '/appartments/rejected?order_by=bedrooms',
+        dynamic_color: 'Appartment.set_color(@worst_bedrooms, @best_bedrooms, @appartments[i].bedrooms)',
+      },
+      {
+        header: 'Baños',
+        dynamic_value: '@appartments[i].bathrooms',
+        sort_route: '/appartments/rejected?order_by=bathrooms',
+        dynamic_color: 'Appartment.set_color(@worst_bathrooms, @best_bathrooms, @appartments[i].bathrooms)',
+      },
+      {
+        header: 'Piso',
+        dynamic_value: '@appartments[i].floor',
+        sort_route: '/appartments/rejected?order_by=floor',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Orientación',
+        dynamic_value: '@appartments[i].orientation',
+        sort_route: '/appartments/rejected?order_by=orientation',
+        hide_on_mobile: true,
+      },
+      {
+        header: 'Superficie útil',
+        dynamic_value: '@appartments[i].useful_surface',
+        sort_route: '/appartments/rejected?order_by=useful_surface',
+        dynamic_color: 'Appartment.set_color(@worst_useful_surface, @best_useful_surface, @appartments[i].useful_surface)',
+      },
+      {
+        header: 'Superficie total',
+        dynamic_value: '@appartments[i].total_surface',
+        sort_route: '/appartments/rejected?order_by=total_surface',
+      },
+      {
+        header: 'Aprobado por',
+        dynamic_value: '@appartments[i].liked_by',
+      },
+      {
+        header: 'Razón de rechazo',
+        dynamic_value: '@appartments[i].reject_reason',
+      },
+    ]
+
     order_by = request.params['order_by']
     if order_by
       if order_by == 'total_cost'
@@ -327,52 +398,52 @@ class AppartmentsController < ApplicationController
       {
         header: 'Comuna',
         dynamic_value: '@appartments[i].commune',
-        sort_route: '/appartments/analysis?order_by=commune',
+        sort_route: '/appartments/sold?order_by=commune',
       },
       {
         header: 'Costo total',
         dynamic_value: '@appartments[i].cost + (@appartments[i].common_expenses || 0)',
-        sort_route: '/appartments/analysis?order_by=total_cost',
+        sort_route: '/appartments/sold?order_by=total_cost',
         dynamic_color: 'Appartment.set_color(@best_total_cost, @worst_total_cost, @appartments[i].cost + (@appartments[i].common_expenses || 0))',
       },
       {
         header: 'Dormitorios',
         dynamic_value: '@appartments[i].bedrooms',
-        sort_route: '/appartments/analysis?order_by=bedrooms',
+        sort_route: '/appartments/sold?order_by=bedrooms',
         dynamic_color: 'Appartment.set_color(@worst_bedrooms, @best_bedrooms, @appartments[i].bedrooms)',
       },
       {
         header: 'Baños',
         dynamic_value: '@appartments[i].bathrooms',
-        sort_route: '/appartments/analysis?order_by=bathrooms',
+        sort_route: '/appartments/sold?order_by=bathrooms',
         dynamic_color: 'Appartment.set_color(@worst_bathrooms, @best_bathrooms, @appartments[i].bathrooms)',
       },
       {
         header: 'Orientación',
         dynamic_value: '@appartments[i].orientation',
-        sort_route: '/appartments/analysis?order_by=orientation',
+        sort_route: '/appartments/sold?order_by=orientation',
         hide_on_mobile: true,
       },
       {
         header: 'Superficie útil',
         dynamic_value: '@appartments[i].useful_surface',
-        sort_route: '/appartments/analysis?order_by=useful_surface',
+        sort_route: '/appartments/sold?order_by=useful_surface',
         dynamic_color: 'Appartment.set_color(@worst_useful_surface, @best_useful_surface, @appartments[i].useful_surface)',
       },
       {
         header: 'Fecha de publicación',
         dynamic_value: '@appartments[i].published',
-        sort_route: '/appartments/analysis?order_by=published',
+        sort_route: '/appartments/sold?order_by=published',
       },
       {
         header: 'Fecha de venta',
         dynamic_value: '@appartments[i].sold_date',
-        sort_route: '/appartments/analysis?order_by=sold_date',
+        sort_route: '/appartments/sold?order_by=sold_date',
       },
       {
         header: 'Duración (días)',
         dynamic_value: '@appartments[i].sold_duration',
-        sort_route: '/appartments/analysis?order_by=duration',
+        sort_route: '/appartments/sold?order_by=duration',
       },
       {
         header: 'Aprobado por',
