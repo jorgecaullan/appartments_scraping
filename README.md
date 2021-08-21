@@ -1,6 +1,8 @@
 # Buscador de departamentos
 
-Buscador de departamentos a partir de ciertos filtros con la finalidad de analisis de datos
+Buscador de departamentos a partir de ciertos filtros con la finalidad de analisis de datos.
+
+El principal beneficio es obtener una vista completa y ordenable de todos los departamentos que podrían interesarte, teniendo data que normalmente no ofrece la pagina debido a que algunas veces se agrega a la descripción de las publicaciones, como: gastos comunes, piso, orientación, etc.
 
 ## Dependencias
 
