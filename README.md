@@ -18,6 +18,8 @@ NOTA: Los mismos pasos pueden ser imitados para instalarlo en un servidor extern
    * `MASTER_PASSWORD`: Clave que se pedirá al abrir la aplicación desde un nuevo dispositivo (se recomienda una clave extensa con letras mayusculas y minusculas, digitos y simbolos). Pensada para poder subir la aplicación a un servidor publico y asi ingresar desde cualquier dispositivo.
    * `POSTGRES_USER`: Usuario de la base de datos (a gusto).
    * `POSTGRES_PASSWORD`: Password de la base de datos (a gusto, pero se recomienda generar un hexagesimal seguro).
+   * `LIKE1_NAME`: Nombre de la primera persona interesada en el departamento (pensado para cuando hay mas de un interesado).
+   * `LIKE2_NAME`: Nombre de la segunda persona interesada en el departamento. En caso de no haber una segunda persona, se recomienda dejar LIKE1_NAME=1 y LIKE2_NAME=2, para usar 1 como pre-aprobacion y 2 como una aprobacion definitiva (para los indecisos).
 
 ### Ejecutar docker
 
